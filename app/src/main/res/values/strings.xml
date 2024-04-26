@@ -1,7 +1,24 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <!-- Splash -->
+    <string name="app_name">Calendario</string>
     <string name="calendario">My Calendario</string>
+
+    <!-- Main -->
     <string name="login">Login</string>
     <string name="registro">Registro</string>
     <string name="volver">Volver</string>
+
+    <!-- Login -->
+    <string name="nombreLogin">Nombre</string>
+    <string name="contrasenaLogin">Contraseña</string>
+
+
+    <!-- Registro -->
+    <string name="nombreRegistro">Nombres</string>
+    <string name="correo">Correo Electronico</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="confirmarContrasena">Confirmar Contraseña</string>
+    <string name="registrar">Registrar</string>
+    <string name="tengoCuenta">Ya tengo una cuenta</string>
+
 </resources>
