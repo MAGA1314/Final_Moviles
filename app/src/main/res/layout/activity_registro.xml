@@ -6,27 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Splash">
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/splascalendar"
-        android:layout_width="match_parent"
-        android:layout_height="438dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        app:lottie_rawRes="@raw/calendar">
-
-    </com.airbnb.lottie.LottieAnimationView>
+    tools:context=".Registro">
 
     <TextView
-        android:id="@+id/textoSplash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/calendario"
+        android:text="@string/registro"
         android:fontFamily="@font/platypiregular"
-        android:textSize="20dp">
+        android:textSize="30dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"/>
 
-    </TextView>
+    <Button
+        android:id="@+id/btnvolver"
+        android:text="@string/volver"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
 
 </LinearLayout>

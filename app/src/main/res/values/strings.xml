@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="calendario">My Calendario</string>
+    <string name="login">Login</string>
+    <string name="registro">Registro</string>
+    <string name="volver">Volver</string>
 </resources>
