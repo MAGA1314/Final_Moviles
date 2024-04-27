@@ -35,11 +35,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Login.class));
-                // Write a message to the database
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("message");
 
-                myRef.setValue("Hello, World!");
             }
         });
         btn_Registro.setOnClickListener(new View.OnClickListener() {
