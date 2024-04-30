@@ -4,9 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -15,12 +19,20 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MenuPrincipal extends AppCompatActivity {
 
     Button CerrarSesion;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
+    TextView NombrePrincipal, CorreoPrincipal;
+    ProgressBar progressBarDatos;
+    DatabaseReference Usuarios;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +45,17 @@ public class MenuPrincipal extends AppCompatActivity {
             return insets;
         });
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle("Agenda");
+        }
+
+
+        NombrePrincipal = findViewById(R.id.txtnombrePrincipal);
+        CorreoPrincipal = findViewById(R.id.txtcorreoPrincipal);
+        progressBarDatos = findViewById(R.id.progressdatos);
+
+        Usuarios = FirebaseDatabase.getInstance().getReference("Usuarios");
         CerrarSesion = findViewById(R.id.cerrarSesion);
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
@@ -41,6 +64,51 @@ public class MenuPrincipal extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SalirAplicacion();
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        ComprobarInicioSesion();
+        super.onStart();
+    }
+
+    private void ComprobarInicioSesion(){
+        //El usuario inicio sesion
+        if(user != null){
+            CargarDatos();
+        }else {
+            // lo dirijimos a MainActivity
+            startActivity(new Intent(MenuPrincipal.this,MainActivity.class));
+        }
+    }
+    private void CargarDatos(){
+        Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                // Si Existe el Usuario
+                if (snapshot.exists()){
+                    //Ocultamos progress
+                    progressBarDatos.setVisibility(View.GONE);
+                    // Mostramos Datos
+                    NombrePrincipal.setVisibility(View.VISIBLE);
+                    CorreoPrincipal.setVisibility(View.VISIBLE);
+
+                    //Obenemos datos
+                    String nombres = ""+snapshot.child("nombre").getValue();
+                    String correo = ""+snapshot.child("mail").getValue();
+
+                    //setear los datos en los textviews
+                    NombrePrincipal.setText(nombres);
+                    CorreoPrincipal.setText(correo);
+
+
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
