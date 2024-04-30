@@ -1,8 +1,10 @@
 package com.maga.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +32,12 @@ public class Login extends AppCompatActivity {
     private EditText passEditText;
     private TextView newusuario;
     private Button btnLogin, btnVolver;
+
+    ProgressDialog progressDialog;
+    FirebaseAuth firebaseAuth;
+
+    //Validar los datos
+    String correo ="", password="";
 
     private FirebaseAuth mAuth;
 
@@ -46,18 +55,24 @@ public class Login extends AppCompatActivity {
         btnLogin = findViewById(R.id.login);
         btnVolver = findViewById(R.id.btnvolver);
         newusuario = findViewById(R.id.usuarioNuevo);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        progressDialog = new ProgressDialog(Login.this);
+        progressDialog.setTitle("Espere Por Favor");
+        progressDialog.setCanceledOnTouchOutside(false);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String email = mailEditText.getText().toString();
                 String password = passEditText.getText().toString();
-
-                if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-                    Toast.makeText(Login.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-                    return;
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                    Toast.makeText(Login.this,"Correo Invalido",Toast.LENGTH_SHORT).show();
+                }else if (TextUtils.isEmpty(password)){
+                    Toast.makeText(Login.this, "Ingrese contraseña",Toast.LENGTH_SHORT).show();
+                }else{
+                    loginUser(email, password);
                 }
-
-                loginUser(email, password);
             }
         });
         newusuario.setOnClickListener(new View.OnClickListener() {
@@ -75,33 +90,37 @@ public class Login extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        progressDialog.setMessage("Iniciando Sesion...");
+        progressDialog.show();
+
+        firebaseAuth.signInWithEmailAndPassword(email, password) // Aquí se corrigió el uso de las variables
+                .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                            // Aquí puedes redirigir al usuario a la actividad principal de tu aplicación
+
+                        if (task.isSuccessful()){
+                            progressDialog.dismiss();
+                            FirebaseUser user = firebaseAuth.getCurrentUser();
                             startActivity(new Intent(Login.this, MenuPrincipal.class));
-                        } else {
-                            // Si el inicio de sesión falla, maneja las excepciones específicas
-                            Exception exception = task.getException();
-                            if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                                // La contraseña es incorre
-                                // cta
-                                Toast.makeText(Login.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
-                            } else if (exception instanceof FirebaseAuthInvalidUserException) {
-                                // El usuario no existe
-                                Toast.makeText(Login.this, "Usuario no existe", Toast.LENGTH_SHORT).show();
-                            } else {
-                                // Otros errores
-                                Toast.makeText(Login.this, "Error en el inicio de sesión: " + exception.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(Login.this, "Bienvenido(a) "+ user.getEmail(),Toast.LENGTH_SHORT).show();
+                            finish();
                         }
+                        else {
+                            progressDialog.dismiss();
+                            Toast.makeText(Login.this, "Verifique si el correo y contraseña son correctos",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Login.this, ""+e.getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
 }
