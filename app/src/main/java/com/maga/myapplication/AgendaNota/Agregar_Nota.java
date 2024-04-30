@@ -29,7 +29,8 @@ public class Agregar_Nota extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agregar_nota);
-        // Inicialización existente
+    }
+    /*    // Inicialización existente
 
         // Inicializa Firebase
         FirebaseApp.initializeApp(this);
@@ -82,5 +83,5 @@ public class Agregar_Nota extends AppCompatActivity {
         Btn_Calendario = findViewById(R.id.btnCalendario);
         Titulo = findViewById(R.id.titulo);
         Descripcion = findViewById(R.id.descripcion);
-    }
+    }*/
 }

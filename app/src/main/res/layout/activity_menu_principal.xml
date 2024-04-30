@@ -7,27 +7,29 @@
     android:layout_height="match_parent"
     tools:context=".MenuPrincipal">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="5dp">
+        android:padding="16dp">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="#724C9F"
             app:cardUseCompatPadding="true"
-            android:padding="1dp"
-            app:cardCornerRadius="5dp">
+            app:cardCornerRadius="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="vertical">
-                
+                android:orientation="vertical"
+                android:padding="16dp">
+
                 <TextView
                     android:id="@+id/txtbienvenido"
                     android:layout_width="wrap_content"
@@ -37,11 +39,12 @@
                     android:fontFamily="@font/platypiregular"
                     android:textSize="20sp"
                     android:textColor="#000000"/>
+
                 <ProgressBar
                     android:id="@+id/progressdatos"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="16dp"
                     android:gravity="center"/>
 
                 <TextView
@@ -65,17 +68,141 @@
                     android:fontFamily="@font/platypiregular"
                     android:textSize="20sp"
                     android:textColor="#000000"/>
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
+        <!-- Agregar Nota -->
+        <LinearLayout
+            android:id="@+id/linearLayoutAgregarNota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp">
+
+            <ImageButton
+                android:id="@+id/imagenCrearNota"
+                android:src="@drawable/add_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/agregarNota"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:fontFamily="@font/platypiregular"/>
+
+        </LinearLayout>
+
+        <!-- Repetir el patrón para los demás elementos -->
+
+        <!-- Listar Nota -->
+        <LinearLayout
+            android:id="@+id/linearLayoutListarNota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutAgregarNota"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp">
+
+            <ImageButton
+                android:id="@+id/imagenListarNota"
+                android:src="@drawable/list_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/listarNota"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:fontFamily="@font/platypiregular"/>
+
+        </LinearLayout>
+
+        <!-- Archivar Nota -->
+        <LinearLayout
+            android:id="@+id/linearLayoutArchivarNota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutListarNota"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp">
+
+            <ImageButton
+                android:id="@+id/imagenArchivarNota"
+                android:src="@drawable/archive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/archivados"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:fontFamily="@font/platypiregular"/>
+
+        </LinearLayout>
+
+        <!-- Mi Perfil -->
+        <LinearLayout
+            android:id="@+id/linearLayoutPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutArchivarNota"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp">
+
+            <ImageButton
+                android:id="@+id/imagenPerfil"
+                android:src="@drawable/account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/perfil"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:fontFamily="@font/platypiregular"/>
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/cerrarSesion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cerrarSesion"
             android:backgroundTint="#724C9F"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutPerfil"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp"/>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
