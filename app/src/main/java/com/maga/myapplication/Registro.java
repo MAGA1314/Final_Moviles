@@ -1,11 +1,13 @@
 package com.maga.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,7 @@ import java.util.regex.Pattern;
 
 public class Registro extends AppCompatActivity {
     DatabaseReference quotesRef;
+    private TextView tengoCuenta;
     private EditText nombreEditText;
     private EditText mailEditText;
     private EditText passEditText;
@@ -36,6 +39,7 @@ public class Registro extends AppCompatActivity {
         setContentView(R.layout.activity_registro);
 
         //bind views
+        tengoCuenta = (TextView) findViewById(R.id.Tengocuenta);
         nombreEditText = (EditText) findViewById(R.id.nombre);
         mailEditText = (EditText) findViewById(R.id.mail);
         passEditText = (EditText) findViewById(R.id.contrasena);
@@ -86,6 +90,12 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 onBackPressed(); // Esto llama al método onBackPressed() de la actividad, que por defecto cierra la actividad actual y vuelve a la anterior.
+            }
+        });
+        tengoCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Registro.this, Login.class));
             }
         });
     }

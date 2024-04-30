@@ -9,8 +9,10 @@
     <string name="volver">Volver</string>
 
     <!-- Login -->
-    <string name="nombreLogin">Nombre</string>
+    <string name="correoLogin">Correo</string>
     <string name="contrasenaLogin">Contraseña</string>
+    <string name="iniciar">Iniciar Sesion</string>
+    <string name="newUser">¿No tienes cuenta?. Registrate</string>
 
 
     <!-- Registro -->
@@ -21,4 +23,6 @@
     <string name="registrar">Registrar</string>
     <string name="tengoCuenta">Ya tengo una cuenta</string>
 
+    <!-- Menu Principal -->
+    <string name="cerrarSesio">Salir</string>
 </resources>

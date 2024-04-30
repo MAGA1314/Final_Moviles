@@ -10,8 +10,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class Splash extends AppCompatActivity {
 
+    FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,13 +29,26 @@ public class Splash extends AppCompatActivity {
             return insets;
         });
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         // Agrega el retraso para iniciar la siguiente actividad
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(Splash.this, MainActivity.class)); // Asegúrate de que MainActivity esté definida en tu proyecto
-                finish();
+                /*startActivity(new Intent(Splash.this, MainActivity.class)); // Asegúrate de que MainActivity esté definida en tu proyecto
+                finish();*/
+                VerificaUsuario();
             }
         }, 2000); // Retraso de 2 segundos
+    }
+    private void VerificaUsuario(){
+        FirebaseUser  firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser == null){
+            startActivity(new Intent(Splash.this,MainActivity.class));
+            finish();
+        }else{
+            startActivity(new Intent(Splash.this,MenuPrincipal.class));
+            finish();
+        }
     }
 }

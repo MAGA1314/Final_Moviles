@@ -27,7 +27,7 @@
                 android:layout_height="200dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="50dp"
-                app:lottie_rawRes="@raw/calendar" />
+                app:lottie_rawRes="@raw/registro" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

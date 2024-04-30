@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -26,7 +27,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class Login extends AppCompatActivity {
     private EditText mailEditText;
     private EditText passEditText;
-    private Button btnLogin;
+    private TextView newusuario;
+    private Button btnLogin, btnVolver;
 
     private FirebaseAuth mAuth;
 
@@ -42,7 +44,8 @@ public class Login extends AppCompatActivity {
         mailEditText = findViewById(R.id.email);
         passEditText = findViewById(R.id.password);
         btnLogin = findViewById(R.id.login);
-
+        btnVolver = findViewById(R.id.btnvolver);
+        newusuario = findViewById(R.id.usuarioNuevo);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +60,18 @@ public class Login extends AppCompatActivity {
                 loginUser(email, password);
             }
         });
+        newusuario.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, Registro.class));
+            }
+        });
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, MainActivity.class));
+            }
+        });
     }
 
     private void loginUser(String email, String password) {
@@ -69,6 +84,7 @@ public class Login extends AppCompatActivity {
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(Login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
                             // Aquí puedes redirigir al usuario a la actividad principal de tu aplicación
+                            startActivity(new Intent(Login.this, MenuPrincipal.class));
                         } else {
                             // Si el inicio de sesión falla, maneja las excepciones específicas
                             Exception exception = task.getException();
