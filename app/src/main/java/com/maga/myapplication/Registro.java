@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -88,32 +91,42 @@ public class Registro extends AppCompatActivity {
     }
 
     private void addQuoteToDB(String Nombres, String Mails, String Contrasena) {
-        //create a hashmap
-        HashMap<String, Object> datosHashmap = new HashMap<>();
-        datosHashmap.put("nombre", Nombres);
-        datosHashmap.put("mail", Mails);
-        datosHashmap.put("contrasena", Contrasena);
-
-        //instantiate database connection
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference quotesRef = database.getReference("Usuarios");
-
-        String key = quotesRef.push().getKey();
-        datosHashmap.put("key", key);
-
-        quotesRef.child(key).setValue(datosHashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(Registro.this, "Usuario Creado :)", Toast.LENGTH_SHORT).show();
-                    nombreEditText.getText().clear();
-                    mailEditText.getText().clear();
-                    passEditText.getText().clear();
-                    confpassEditText.getText().clear();
-                } else {
-                    Toast.makeText(Registro.this, "Error al Crear Usuario :(: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.createUserWithEmailAndPassword(Mails, Contrasena)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            FirebaseUser user = auth.getCurrentUser();
+                            // Aquí puedes almacenar información adicional del usuario en la base de datos
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference userRef = database.getReference("Usuarios").child(user.getUid());
+                            HashMap<String, Object> userInfo = new HashMap<>();
+                            userInfo.put("nombre", Nombres);
+                            userInfo.put("mail", Mails);
+                            userInfo.put("contrasena",Contrasena);
+                            // No es seguro almacenar la contraseña en la base de datos
+                            // userInfo.put("contrasena", Contrasena);
+                            userRef.setValue(userInfo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(Registro.this, "Usuario Creado y Guardado en la Base de Datos :)", Toast.LENGTH_SHORT).show();
+                                        nombreEditText.getText().clear();
+                                        mailEditText.getText().clear();
+                                        passEditText.getText().clear();
+                                        confpassEditText.getText().clear();
+                                    } else {
+                                        Toast.makeText(Registro.this, "Error al Guardar Usuario en la Base de Datos :(" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Toast.makeText(Registro.this, "Error al Crear Usuario :(: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

@@ -73,7 +73,8 @@ public class Login extends AppCompatActivity {
                             // Si el inicio de sesión falla, maneja las excepciones específicas
                             Exception exception = task.getException();
                             if (exception instanceof FirebaseAuthInvalidCredentialsException) {
-                                // La contraseña es incorrecta
+                                // La contraseña es incorre
+                                // cta
                                 Toast.makeText(Login.this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show();
                             } else if (exception instanceof FirebaseAuthInvalidUserException) {
                                 // El usuario no existe
