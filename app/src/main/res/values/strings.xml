@@ -28,6 +28,22 @@
     <string name="bienvenido">Bienvenido(a)</string>
     <string name="nombrePrincipal">--</string>
     <string name="correoPrincipal">--</string>
-    
+
+    <string name="agregarNota">Agregar</string>
+    <string name="listarNota">Listar</string>
+    <string name="archivados">Archivados</string>
+    <string name="perfil">Mi Perfil</string>
+    <string name="aboutUs">Acerca De</string>
+
+    <!-- Agregar Nota -->
+    <string name="uid_Usuario">Uid del Usuario</string>
+    <string name="correo_usuario">Correo De Usuario</string>
+    <string name="fecha_hora_actual">Fecha y Hora actual</string>
+    <string name="Titulo">Titulo</string>
+    <string name="Descripcion">Descripcion</string>
+    <string name="btnCalendario">Calendario</string>
+    <string name="fecha">00/00/0000</string>
+    <string name="Estado">No finalizado</string>
+
 
 </resources>
