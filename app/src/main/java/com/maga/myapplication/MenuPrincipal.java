@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,10 +26,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.maga.myapplication.AgendaNota.Agregar_Nota;
+import com.maga.myapplication.ListarNota.Listar_Nota;
+import com.maga.myapplication.NotasArchivadas.Archivar_Nota;
+import com.maga.myapplication.Perfil.MiPerfil;
 
 public class MenuPrincipal extends AppCompatActivity {
 
     Button CerrarSesion;
+    LinearLayout CrearNota, ListarNota, ArchivarNota, MiPerfil;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
     TextView NombrePrincipal, CorreoPrincipal;
@@ -60,6 +67,36 @@ public class MenuPrincipal extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
+        //--> ImageButtons
+        CrearNota = findViewById(R.id.linearLayoutAgregarNota);
+        ListarNota = findViewById(R.id.linearLayoutListarNota);
+        ArchivarNota = findViewById(R.id.linearLayoutArchivarNota);
+        MiPerfil = findViewById(R.id.linearLayoutPerfil);
+
+        CrearNota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuPrincipal.this, Agregar_Nota.class));
+            }
+        });
+        ListarNota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuPrincipal.this, Listar_Nota.class));
+            }
+        });
+        ArchivarNota.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuPrincipal.this, Archivar_Nota.class));
+            }
+        });
+        MiPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuPrincipal.this, com.maga.myapplication.Perfil.MiPerfil.class));
+            }
+        });
         CerrarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
