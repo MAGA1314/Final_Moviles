@@ -1,4 +1,4 @@
-package com.maga.myapplication.ListarNota;
+package com.maga.myapplication;
 
 import android.os.Bundle;
 

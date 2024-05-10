@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AgendaNota.Agregar_Nota">
+    tools:context=".Agregar_Nota">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -13,90 +13,56 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <!-- Nombre Del Usuario -->
-        <TextView
-            android:id="@+id/uidUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:hint="@string/uid_Usuario"
-            android:fontFamily="@font/platypiregular"/>
-
-        <!-- Correo Del Usuario -->
-        <TextView
-            android:id="@+id/correoUsuario"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:hint="@string/correo_usuario"
-            android:fontFamily="@font/platypiregular"/>
-
-        <!-- Fecha y Hora Del Dispositivo -->
-        <TextView
-            android:id="@+id/fecha_hora_actual"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:hint="@string/fecha_hora_actual"
-            android:fontFamily="@font/platypiregular"/>
-
         <!-- Titulo -->
         <EditText
             android:id="@+id/titulo"
             android:hint="@string/Titulo"
+            android:inputType="textCapWords"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/platypiregular"/>
+            android:textStyle="bold"/>
 
         <!-- Descripcion -->
         <EditText
             android:id="@+id/descripcion"
             android:hint="@string/Descripcion"
+            android:inputType="textLongMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="10dp"
             android:minHeight="150dp"
-            android:gravity="start"
-            android:fontFamily="@font/platypiregular"/>
+            android:gravity="start"/>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+        <!-- Fecha -->
+        <EditText
+            android:id="@+id/fecha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha (YYYY-MM-DD)"
+            android:inputType="date"
+            android:imeOptions="actionDone"/>
 
-                <Button
-                    android:id="@+id/btnCalendario"
-                    android:text="@string/btnCalendario"
-                    app:icon="@drawable/calendar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
-                <TextView
-                    android:id="@+id/fecha"
-                    android:text="@string/fecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:layout_marginStart="15dp"
-                    android:fontFamily="@font/platypiregular"/>
 
-            </androidx.appcompat.widget.LinearLayoutCompat>
-        <TextView
-            android:id="@+id/txtEstado"
-            android:hint="@string/Estado"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/platypiregular"
+        <!-- Boton de Guardar -->
+        <Button
+            android:id="@+id/btnGuardar"
+            android:text="@string/btnGuardar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
 
-
-
+        <!-- Boton de Volver -->
+        <Button
+            android:id="@+id/btn_Volver"
+            android:text="@string/volver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

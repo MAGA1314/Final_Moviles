@@ -42,6 +42,7 @@
     <string name="Titulo">Titulo</string>
     <string name="Descripcion">Descripcion</string>
     <string name="btnCalendario">Calendario</string>
+    <string name="btnGuardar">Guardar Nota</string>
     <string name="fecha">00/00/0000</string>
     <string name="Estado">No finalizado</string>
 
