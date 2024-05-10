@@ -46,5 +46,8 @@
     <string name="fecha">00/00/0000</string>
     <string name="Estado">No finalizado</string>
 
+    <!-- Ver Nota -->
+    <string name="verNota">Notas</string>
+
 
 </resources>
