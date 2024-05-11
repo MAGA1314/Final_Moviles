@@ -49,5 +49,10 @@
     <!-- Ver Nota -->
     <string name="verNota">Notas</string>
 
+    <!-- RecyclerView -->
+    <string name="tituloNota">Titulo de la Nota</string>
+    <string name="descripcionNota">Descripcion de la Nota</string>
+
+
 
 </resources>

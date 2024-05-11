@@ -35,10 +35,14 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    //bom para garantizar que las dependencias sean compatibles
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.airbnb.android:lottie:6.4.0")
-    implementation("com.google.firebase:firebase-analytics:17.2.2")
-    implementation("com.google.firebase:firebase-database:20.0.3")
-    implementation("com.google.firebase:firebase-auth:21.0.1")
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-auth")
+    //Firestore Firebase
+    implementation("com.firebaseui:firebase-ui-firestore:8.0.2")
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
     implementation(libs.firebase.firestore)

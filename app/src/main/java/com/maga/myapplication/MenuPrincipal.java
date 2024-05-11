@@ -76,7 +76,7 @@ public class MenuPrincipal extends AppCompatActivity {
         ListarNota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuPrincipal.this, Listar_Nota.class));
+                startActivity(new Intent(MenuPrincipal.this, Ver_Nota.class));
             }
         });
         ArchivarNota.setOnClickListener(new View.OnClickListener() {
