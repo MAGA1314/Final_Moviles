@@ -55,6 +55,7 @@
         android:id="@+id/add_note"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/add"/>
+        android:src="@drawable/add"
+        android:layout_margin="16dp"/>
 
 </RelativeLayout>

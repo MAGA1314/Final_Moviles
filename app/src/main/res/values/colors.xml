@@ -3,6 +3,8 @@
 <resources>
     <color name="black">#000000</color>
     <color name="seed">#111111</color>
+    <color name="morado">#724C9F</color>
+    <color name="white">#ffffff</color>
     <color name="md_theme_light_primary">#006874</color>
     <color name="md_theme_light_onPrimary">#FFFFFF</color>
     <color name="md_theme_light_primaryContainer">#97F0FF</color>

@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation("androidx.cardview:cardview:1.0.0")
     //bom para garantizar que las dependencias sean compatibles
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.airbnb.android:lottie:6.4.0")
