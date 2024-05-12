@@ -2,9 +2,12 @@ package com.maga.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MenuPrincipal extends AppCompatActivity {
 
     Button CerrarSesion;
+    ImageButton btnmenu;
     LinearLayout CrearNota, ListarNota, ArchivarNota, MiPerfil;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
@@ -66,6 +70,7 @@ public class MenuPrincipal extends AppCompatActivity {
         ListarNota = findViewById(R.id.linearLayoutListarNota);
         ArchivarNota = findViewById(R.id.linearLayoutArchivarNota);
         MiPerfil = findViewById(R.id.linearLayoutPerfil);
+        btnmenu = findViewById(R.id.btnmenu);
 
         CrearNota.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +102,26 @@ public class MenuPrincipal extends AppCompatActivity {
                 SalirAplicacion();
             }
         });
+        btnmenu.setOnClickListener((v)-> ShowMenu());
     }
 
+    void ShowMenu(){
+        PopupMenu popupMenu = new PopupMenu(MenuPrincipal.this,btnmenu);
+        popupMenu.getMenu().add("Cerrar Sesion");
+        popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getTitle()=="Cerrar Sesion"){
+                    firebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(MenuPrincipal.this, Registro.class));
+                    finish();
+                }
+                return false;
+            }
+        });
+
+    }
     @Override
     protected void onStart() {
         ComprobarInicioSesion();

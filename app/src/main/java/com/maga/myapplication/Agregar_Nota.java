@@ -33,7 +33,7 @@ public class Agregar_Nota extends AppCompatActivity {
     TextView tituloPagina;
     String title,descripcion,docId;
 
-    ImageButton btnMisNotas;
+    ImageButton btnMisNotas, btnBorrar;
     Button btnGuardar, btnVolver; // Actualizado el nombre del botón
     Boolean editarModo = false;
 
@@ -45,6 +45,7 @@ public class Agregar_Nota extends AppCompatActivity {
         Titulo = findViewById(R.id.titulo);
         Descripcion = findViewById(R.id.descripcion);
         Fecha = findViewById(R.id.fecha);
+        btnBorrar = findViewById(R.id.btnBorrar);
         btnMisNotas = findViewById(R.id.btnVerNotas);
         btnGuardar = findViewById(R.id.btnGuardar);
         btnVolver = findViewById(R.id.btn_Volver);
@@ -64,6 +65,7 @@ public class Agregar_Nota extends AppCompatActivity {
 
         if (editarModo){
             tituloPagina.setText("Editar Nota");
+            btnBorrar.setVisibility(View.VISIBLE);
         }
 
 
@@ -93,6 +95,8 @@ public class Agregar_Nota extends AppCompatActivity {
 
         btnGuardar.setOnClickListener(v -> GuardarNota());
 
+        btnBorrar.setOnClickListener((v)-> borrarNotaFirebase());
+
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +104,25 @@ public class Agregar_Nota extends AppCompatActivity {
             }
         });
     }
+
+    private void borrarNotaFirebase() {
+        Utilidad.ReferenciaDeColeccion referenciaDeColeccion = Utilidad.getReferenciaDeColeccion();
+        DocumentReference documentReference;
+            documentReference = Utilidad.getDocumentReference(docId);
+        documentReference.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    // Nota Eliminada
+                    Utilidad.verToast(Agregar_Nota.this,"Nota Eliminada");
+                }else{
+                    // Nota sin agregar o actualizar
+                    Utilidad.verToast(Agregar_Nota.this,"Nota Sin Eliminar");
+                }
+            }
+        });
+    }
+
     private void validarFecha(String fecha) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         dateFormat.setLenient(false); // Establecer en false para una validación estricta
