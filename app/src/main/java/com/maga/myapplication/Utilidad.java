@@ -17,17 +17,18 @@ public class Utilidad {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
-    static class ReferenciaDeColeccion {
+    public static class ReferenciaDeColeccion {
         public CollectionReference collectionReference;
 
         public ReferenciaDeColeccion(CollectionReference collectionReference) {
             this.collectionReference = collectionReference;
         }
+
+        // Modificado para manejar la creación de nuevos documentos sin argumentos
         public DocumentReference document() {
+            // Si no se pasa ningún argumento, se crea un nuevo documento
             return collectionReference.document();
         }
-
-        // Aquí puedes agregar métodos adicionales si es necesario
     }
 
     public static ReferenciaDeColeccion getReferenciaDeColeccion(){
@@ -36,8 +37,25 @@ public class Utilidad {
                 .document(UsuarioActual.getUid()).collection("Mis_Notas");
         return new ReferenciaDeColeccion(collectionReference);
     }
+
+    // Corrección: Cambiar la definición de getDocumentReference para que sea un método estático de Utilidad
+    public static DocumentReference getDocumentReference(String docId) {
+        FirebaseUser UsuarioActual = FirebaseAuth.getInstance().getCurrentUser();
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("notas")
+                .document(UsuarioActual.getUid()).collection("Mis_Notas");
+        ReferenciaDeColeccion referenciaDeColeccion = new ReferenciaDeColeccion(collectionReference);
+
+        // Devolver una referencia de documento basada en si docId está presente o no
+        if (docId != null && !docId.isEmpty()) {
+            // Si docId no es nulo ni vacío, se refiere a un documento existente
+            return referenciaDeColeccion.collectionReference.document(docId);
+        } else {
+            // Si docId es nulo o vacío, se crea un nuevo documento
+            return referenciaDeColeccion.document();
+        }
+    }
+
     public static String timestampToString(Timestamp timestamp){
         return new SimpleDateFormat("MM/dd/yyyy").format(timestamp.toDate());
     }
-
 }

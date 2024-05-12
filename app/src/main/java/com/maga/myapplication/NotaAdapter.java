@@ -1,6 +1,7 @@
 package com.maga.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +22,21 @@ public class NotaAdapter extends FirestoreRecyclerAdapter<Nota, NotaAdapter.Nota
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull NotaViewHolder notaViewHolder, int i, @NonNull Nota nota) {
+    protected void onBindViewHolder(@NonNull NotaViewHolder notaViewHolder, int position, @NonNull Nota nota) {
         notaViewHolder.TVTitulo.setText(nota.titulo);
         notaViewHolder.TVDescripcion.setText(nota.descripcion);
         notaViewHolder.TVFecha.setText(nota.fecha);
         notaViewHolder.TVTimestamp.setText(Utilidad.timestampToString(nota.timestamp));
+
+        notaViewHolder.itemView.setOnClickListener((v)->{
+            Intent intent = new Intent(context, Agregar_Nota.class);
+            intent.putExtra("titulo",nota.titulo);
+            intent.putExtra("descripcion",nota.descripcion);
+            String docID = this.getSnapshots().getSnapshot(position).getId();
+            intent.putExtra("docId",docID);
+            context.startActivity(intent);
+
+        });
     }
 
     @NonNull

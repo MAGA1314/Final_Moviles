@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,18 +18,24 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class Agregar_Nota extends AppCompatActivity {
 
     EditText Titulo, Descripcion, Fecha;
+    TextView tituloPagina;
+    String title,descripcion,docId;
 
     ImageButton btnMisNotas;
     Button btnGuardar, btnVolver; // Actualizado el nombre del botón
+    Boolean editarModo = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,24 @@ public class Agregar_Nota extends AppCompatActivity {
         btnMisNotas = findViewById(R.id.btnVerNotas);
         btnGuardar = findViewById(R.id.btnGuardar);
         btnVolver = findViewById(R.id.btn_Volver);
+        tituloPagina =findViewById(R.id.titulo_VerNota);
+
+        //Recibir los Datos
+        title = getIntent().getStringExtra("titulo");
+        descripcion = getIntent().getStringExtra("descripcion");
+        docId = getIntent().getStringExtra("docId");
+
+        if (docId!=null && !docId.isEmpty()){
+            editarModo=true;
+        }
+
+        Titulo.setText(title);
+        Descripcion.setText(descripcion);
+
+        if (editarModo){
+            tituloPagina.setText("Editar Nota");
+        }
+
 
         // Agregar TextWatcher al EditText de la fecha
         Fecha.addTextChangedListener(new TextWatcher() {
@@ -123,21 +148,36 @@ public class Agregar_Nota extends AppCompatActivity {
 
 
     void GuardarNotaFirebase(Nota nota){
-        // Accede a ReferenciaDeColeccion a través de Utilidad
+        Map<String, Object> notaData = new HashMap<>();
+        notaData.put("titulo", nota.getTitulo());
+        notaData.put("descripcion", nota.getDescripcion());
+        notaData.put("fecha", nota.getFecha());
+        notaData.put("timestamp", nota.getTimestamp());
+
         Utilidad.ReferenciaDeColeccion referenciaDeColeccion = Utilidad.getReferenciaDeColeccion();
-        // Luego llama al método document() en la referencia de la colección
-        DocumentReference documentReference = referenciaDeColeccion.document();
-        documentReference.set(nota).addOnCompleteListener(new OnCompleteListener<Void>() {
+        DocumentReference documentReference;
+
+        if(editarModo){
+            // Actualizar Nota
+            documentReference = Utilidad.getDocumentReference(docId);
+        } else {
+            // Crear Nueva Nota
+            // Asegúrate de que el método document() se llame sin argumentos aquí
+            documentReference = referenciaDeColeccion.document();
+        }
+
+        documentReference.set(notaData).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    // Nota agregada
-                    Utilidad.verToast(Agregar_Nota.this,"Nota Agregada.");
+                    // Nota agregada o actualizada
+                    Utilidad.verToast(Agregar_Nota.this,"Nota Agregada o Actualizada.");
                 }else{
-                    // Nota sin agregar
-                    Utilidad.verToast(Agregar_Nota.this,"Nota No Agregada.");
+                    // Nota sin agregar o actualizar
+                    Utilidad.verToast(Agregar_Nota.this,"Nota No Agregada o Actualizada.");
                 }
             }
         });
     }
+
 }
