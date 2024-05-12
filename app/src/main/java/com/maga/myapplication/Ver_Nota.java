@@ -23,7 +23,7 @@ import com.google.firebase.firestore.Query;
 public class Ver_Nota extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ExtendedFloatingActionButton addNota; // Cambia el tipo a ExtendedFloatingActionButton
+    ExtendedFloatingActionButton addNota, btnVolver; // Cambia el tipo a ExtendedFloatingActionButton
     ImageButton menubtn;
     NotaAdapter notaAdapter;
     //Button btnVolver;
@@ -41,8 +41,14 @@ public class Ver_Nota extends AppCompatActivity {
         addNota = findViewById(R.id.add_note); // Ahora es seguro asignar el botón flotante
         recyclerView = findViewById(R.id.recycler_view_notas);
         menubtn = findViewById(R.id.btnMenu);
-        //btnVolver = findViewById(R.id.btn_Volver);
+        btnVolver = findViewById(R.id.btnVolver);
 
+        btnVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Ver_Nota.this, MenuPrincipal.class));
+            }
+        });
         addNota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
