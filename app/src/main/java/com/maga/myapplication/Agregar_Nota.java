@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,8 @@ import java.util.Locale;
 public class Agregar_Nota extends AppCompatActivity {
 
     EditText Titulo, Descripcion, Fecha;
+
+    ImageButton btnMisNotas;
     Button btnGuardar, btnVolver; // Actualizado el nombre del botón
 
     @Override
@@ -35,6 +38,7 @@ public class Agregar_Nota extends AppCompatActivity {
         Titulo = findViewById(R.id.titulo);
         Descripcion = findViewById(R.id.descripcion);
         Fecha = findViewById(R.id.fecha);
+        btnMisNotas = findViewById(R.id.btnVerNotas);
         btnGuardar = findViewById(R.id.btnGuardar);
         btnVolver = findViewById(R.id.btn_Volver);
 
@@ -53,6 +57,12 @@ public class Agregar_Nota extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 validarFecha(s.toString());
+            }
+        });
+        btnMisNotas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Agregar_Nota.this, Ver_Nota.class));
             }
         });
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -13,11 +13,40 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/titulo_VerNota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
+                android:layout_marginTop="10sp"
+                android:fontFamily="@font/platypiregular"
+                android:text="@string/add_Nota"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btnVerNotas"
+                android:layout_width="36dp"
+                android:layout_height="36sp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10sp"
+                android:src="@drawable/list_note" />
+
+        </RelativeLayout>
+
         <!-- Titulo -->
         <EditText
             android:id="@+id/titulo"
             android:hint="@string/Titulo"
             android:inputType="textCapWords"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/platypiregular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="25sp"
@@ -30,6 +59,7 @@
             android:inputType="textLongMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/platypiregular"
             android:textStyle="bold"
             android:textSize="20sp"
             android:layout_marginTop="10dp"
@@ -41,29 +71,53 @@
             android:id="@+id/fecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/platypiregular"
             android:hint="Fecha (YYYY-MM-DD)"
             android:inputType="date"
             android:imeOptions="actionDone"/>
 
-
-        <!-- Boton de Guardar -->
-        <Button
-            android:id="@+id/btnGuardar"
-            android:text="@string/btnGuardar"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"/>
+            android:orientation="horizontal"
+            android:layout_gravity="bottom">
 
-        <!-- Boton de Volver -->
-        <Button
-            android:id="@+id/btn_Volver"
-            android:text="@string/volver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"/>
+            <!-- Boton de Guardar -->
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/btnGuardar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/platypiregular"
+                android:text="@string/btnGuardar"
+                android:drawableEnd="@drawable/save"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/md_theme_light_primary"
+                android:textColor="@color/white"
+                android:layout_marginTop="20dp"/>
+            <!-- Espacio entre los botones -->
+            <View
+                android:layout_width="30dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_toStartOf="@id/btnGuardar"
+                android:layout_toEndOf="@id/btn_Volver" />
+
+            <!-- Boton de Volver -->
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/btn_Volver"
+                android:layout_width="133dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/md_theme_light_primary"
+                android:drawableEnd="@drawable/back"
+                android:fontFamily="@font/platypiregular"
+                android:textColor="@color/white"
+                android:text="@string/volver"/>
+        </LinearLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</ScrollView>
+</RelativeLayout>
