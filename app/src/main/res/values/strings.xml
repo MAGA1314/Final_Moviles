@@ -24,6 +24,7 @@
     <string name="tengoCuenta">Ya tengo una cuenta</string>
 
     <!-- Menu Principal -->
+    <string name="menu">Menu Principal</string>
     <string name="cerrarSesion">Salir</string>
     <string name="bienvenido">Bienvenido(a)</string>
     <string name="nombrePrincipal">--</string>
