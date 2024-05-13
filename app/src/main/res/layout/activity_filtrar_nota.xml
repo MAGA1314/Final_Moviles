@@ -10,7 +10,8 @@
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/titulo_FiltrarNota"
@@ -43,26 +44,29 @@
 
         <EditText
             android:id="@+id/ETbuscar"
-            android:layout_margin="10dp"
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:drawableStart="@drawable/search"
-            android:hint="@string/buscar"/>
+            android:hint="@string/buscar"
+            android:padding="20dp" />
 
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_filtrar"
-        android:layout_width="384dp"
-        android:layout_height="497dp"
+        android:layout_width="386dp"
+        android:layout_height="460dp"
         android:layout_above="@id/add_note"
         android:layout_below="@+id/linearLayout"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="-2dp"
+        android:layout_marginTop="21dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="40dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:padding="20dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/add_note"

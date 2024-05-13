@@ -119,7 +119,7 @@ public class MiPerfil extends AppCompatActivity {
                         txtNombrePerfil.setText("Usuario: "+nombres);
                         txtCorreoPerfil.setText(correo);
                         txtContraseña.setText("Contraseña: "+contrasena);
-                        //etContrasena.setText(contrasena);
+                        etContrasena.setText(correo);
                     }
                 }
             }

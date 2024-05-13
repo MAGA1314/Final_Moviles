@@ -32,7 +32,7 @@ public class MenuPrincipal extends AppCompatActivity {
 
     Button CerrarSesion;
     ImageButton btnmenu;
-    LinearLayout CrearNota, ListarNota, ArchivarNota, MiPerfil;
+    LinearLayout CrearNota, ListarNota, BuscarNota, MiPerfil;
     FirebaseAuth firebaseAuth;
     FirebaseUser user;
     TextView NombrePrincipal, CorreoPrincipal;
@@ -68,7 +68,7 @@ public class MenuPrincipal extends AppCompatActivity {
         //--> ImageButtons
         CrearNota = findViewById(R.id.linearLayoutAgregarNota);
         ListarNota = findViewById(R.id.linearLayoutListarNota);
-        ArchivarNota = findViewById(R.id.linearLayoutArchivarNota);
+        BuscarNota = findViewById(R.id.linearLayoutBuscarNota);
         MiPerfil = findViewById(R.id.linearLayoutPerfil);
         btnmenu = findViewById(R.id.btnmenu);
 
@@ -84,10 +84,10 @@ public class MenuPrincipal extends AppCompatActivity {
                 startActivity(new Intent(MenuPrincipal.this, Ver_Nota.class));
             }
         });
-        ArchivarNota.setOnClickListener(new View.OnClickListener() {
+        BuscarNota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuPrincipal.this, Archivar_Nota.class));
+                startActivity(new Intent(MenuPrincipal.this, filtrar_Nota.class));
             }
         });
         MiPerfil.setOnClickListener(new View.OnClickListener() {
