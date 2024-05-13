@@ -105,7 +105,7 @@ public class MenuPrincipal extends AppCompatActivity {
         btnmenu.setOnClickListener((v)-> ShowMenu());
     }
 
-    void ShowMenu(){
+    public void ShowMenu(){
         PopupMenu popupMenu = new PopupMenu(MenuPrincipal.this,btnmenu);
         popupMenu.getMenu().add("Cerrar Sesion");
         popupMenu.show();
