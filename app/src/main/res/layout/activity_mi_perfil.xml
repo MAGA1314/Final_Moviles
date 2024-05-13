@@ -13,8 +13,7 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginTop="40dp">
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/titulo_MiPerfil"
@@ -40,9 +39,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        android:orientation="vertical">
+        android:layout_height="616dp"
+        android:layout_below="@+id/relativeLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="-4dp"
+        android:layout_marginBottom="3dp"
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <ImageView
             android:id="@+id/imgUsuario"
@@ -52,7 +55,7 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="138dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60dp"
             android:layout_marginEnd="145dp"
             android:src="@drawable/profile" />
 
@@ -116,11 +119,11 @@
             android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:fontFamily="@font/platypiregular"
-            android:textSize="16sp"
             android:backgroundTint="@color/md_theme_light_primary"
             android:drawableEnd="@drawable/save"
-            android:text="@string/restablecer" />
+            android:fontFamily="@font/platypiregular"
+            android:text="@string/restablecer"
+            android:textSize="16sp" />
 
 
     </LinearLayout>

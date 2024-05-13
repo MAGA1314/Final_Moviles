@@ -114,7 +114,7 @@ public class MenuPrincipal extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getTitle()=="Cerrar Sesion"){
                     firebaseAuth.getInstance().signOut();
-                    startActivity(new Intent(MenuPrincipal.this, Registro.class));
+                    startActivity(new Intent(MenuPrincipal.this, MainActivity.class));
                     finish();
                 }
                 return false;
@@ -146,15 +146,15 @@ public class MenuPrincipal extends AppCompatActivity {
                     progressBarDatos.setVisibility(View.GONE);
                     // Mostramos Datos
                     NombrePrincipal.setVisibility(View.VISIBLE);
-                    CorreoPrincipal.setVisibility(View.VISIBLE);
+                    //CorreoPrincipal.setVisibility(View.VISIBLE);
 
                     //Obenemos datos
                     String nombres = ""+snapshot.child("nombre").getValue();
-                    String correo = ""+snapshot.child("mail").getValue();
+                    //String correo = ""+snapshot.child("mail").getValue();
 
                     //setear los datos en los textviews
                     NombrePrincipal.setText(nombres);
-                    CorreoPrincipal.setText(correo);
+                    //CorreoPrincipal.setText(correo);
                 }
             }
             @Override
