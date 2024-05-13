@@ -66,6 +66,8 @@ public class Agregar_Nota extends AppCompatActivity {
         if (editarModo){
             tituloPagina.setText("Editar Nota");
             btnBorrar.setVisibility(View.VISIBLE);
+        }else{
+            btnBorrar.setVisibility(View.GONE);//Ocultar si no esta en mmodo edicion;
         }
 
 

@@ -3,8 +3,10 @@ package com.maga.myapplication;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,9 +16,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton; // Asegúrate de que esta sea la única importación relacionada con FloatingActionButton
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.Query;
 
@@ -26,7 +32,8 @@ public class Ver_Nota extends AppCompatActivity {
     ExtendedFloatingActionButton addNota, btnVolver; // Cambia el tipo a ExtendedFloatingActionButton
     ImageButton menubtn;
     NotaAdapter notaAdapter;
-    //Button btnVolver;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,9 @@ public class Ver_Nota extends AppCompatActivity {
         menubtn = findViewById(R.id.btnMenu);
         btnVolver = findViewById(R.id.btnVolver);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+
         btnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +65,7 @@ public class Ver_Nota extends AppCompatActivity {
                 startActivity(new Intent(Ver_Nota.this, Agregar_Nota.class));
             }
         });
-        menubtn.setOnClickListener((v) -> verMenu());
+        menubtn.setOnClickListener((v) -> ShowMenu()); // Llama a ShowMenu() cuando se hace clic en el botón del menú
         configurarRecyclerView();
     }
 
@@ -78,7 +88,7 @@ public class Ver_Nota extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (notaAdapter!= null) { // Asegúrate de que notaAdapter no sea null antes de llamar a startListening()
+        if (notaAdapter!= null) {
             notaAdapter.startListening();
         }
     }
@@ -97,5 +107,30 @@ public class Ver_Nota extends AppCompatActivity {
         if (notaAdapter!= null) {
             notaAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void ShowMenu() {
+        PopupMenu popupMenu = new PopupMenu(Ver_Nota.this, menubtn);
+        popupMenu.getMenu().add("Mi Perfil");
+        popupMenu.getMenu().add("Cerrar Sesion");
+        popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getTitle().equals("Cerrar Sesion")) {
+                    SalirAplicacion();
+                }
+                else if (item.getTitle().equals("Mi Perfil")){
+                    startActivity(new Intent(Ver_Nota.this, MiPerfil.class));
+                }
+                return false;
+            }
+        });
+    }
+
+    private void SalirAplicacion() {
+        firebaseAuth.signOut();
+        startActivity(new Intent(Ver_Nota.this, MainActivity.class)); // Asegúrate de cambiar MainActivity por la actividad principal de tu aplicación
+        finish();
     }
 }
