@@ -120,7 +120,6 @@ public class MenuPrincipal extends AppCompatActivity {
                 return false;
             }
         });
-
     }
     @Override
     protected void onStart() {

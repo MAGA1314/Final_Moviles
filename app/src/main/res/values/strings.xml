@@ -58,6 +58,10 @@
     <!-- Filtrar Nota -->
     <string name="buscar">Buscar Nota</string>
 
+    <!-- Mi Perfil -->
+    <string name="restablecer">Restablecer Contraseña</string>
+    <string name="ingresecorreo">Por favor ingrese su correo</string>
+
 
 
 </resources>
