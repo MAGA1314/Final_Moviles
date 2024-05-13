@@ -156,8 +156,6 @@ public class MenuPrincipal extends AppCompatActivity {
                     //setear los datos en los textviews
                     NombrePrincipal.setText(nombres);
                     CorreoPrincipal.setText(correo);
-
-
                 }
             }
             @Override

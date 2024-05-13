@@ -13,13 +13,13 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/titulo_VerNota"
+            android:id="@+id/titulo_FiltrarNota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5sp"
             android:layout_marginTop="10sp"
             android:fontFamily="@font/platypiregular"
-            android:text="@string/verNota"
+            android:text="@string/buscar"
             android:textSize="32sp"
             android:textStyle="bold" />
 
@@ -34,12 +34,28 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_marginTop="60sp"
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/ETbuscar"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableStart="@drawable/search"
+            android:hint="@string/buscar"/>
+
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_notas"
-        android:layout_width="390dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/recycler_view_filtrar"
+        android:layout_width="384dp"
+        android:layout_height="497dp"
         android:layout_above="@id/add_note"
-        android:layout_below="@+id/relativeLayout"
+        android:layout_below="@+id/linearLayout"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="-2dp"

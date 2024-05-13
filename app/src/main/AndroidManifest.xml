@@ -24,7 +24,7 @@
             android:name=".Archivar_Nota"
             android:exported="false" />
         <activity
-            android:name=".Listar_Nota"
+            android:name=".filtrar_Nota"
             android:exported="false" />
         <activity
             android:name=".Agregar_Nota"
