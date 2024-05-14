@@ -2,6 +2,8 @@ package com.maga.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -30,10 +32,10 @@ public class filtrar_Nota extends AppCompatActivity {
     ImageButton BtnMenu;
     EditText BuscarTexto;
     FirebaseAuth firebaseAuth;
-
     NotaAdapter notaAdapter;
     RecyclerView recyclerView;
     ExtendedFloatingActionButton btnVolver, btnAgregar, btnPerfil;
+    CollectionReference collectionRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +55,26 @@ public class filtrar_Nota extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+
+        Utilidad.ReferenciaDeColeccion referenciaDeColeccion = Utilidad.getReferenciaDeColeccion();
+        collectionRef = referenciaDeColeccion.collectionReference; // Asegúrate de que collectionRef esté inicializado antes de llamar a configurarRecyclerView()
+
         configurarRecyclerView();
 
+        BuscarTexto.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterNotes(s.toString()); // Llama a la función de filtro con el texto ingresado
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
         BtnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,14 +101,22 @@ public class filtrar_Nota extends AppCompatActivity {
         });
 
     }
-    public void configurarRecyclerView() {
-        verMenu();
+    private void filterNotes(String query) {
+
+        Query queryRef = collectionRef.whereEqualTo("titulo", query).orderBy("timestamp", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<Nota> options = new FirestoreRecyclerOptions.Builder<Nota>()
+                .setQuery(queryRef, Nota.class)
+                .build();
+
+        notaAdapter = new NotaAdapter(options, this);
+        recyclerView.setAdapter(notaAdapter);
+        notaAdapter.startListening();
     }
 
-    public void verMenu() {
+    public void configurarRecyclerView() {
         // Tu lógica para mostrar el menú
-        Utilidad.ReferenciaDeColeccion referenciaDeColeccion = Utilidad.getReferenciaDeColeccion();
-        CollectionReference collectionRef = referenciaDeColeccion.collectionReference;
+        // Elimina la redeclaración de collectionRef aquí
         Query query = collectionRef.orderBy("timestamp", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Nota> options = new FirestoreRecyclerOptions.Builder<Nota>()
                 .setQuery(query, Nota.class).build();

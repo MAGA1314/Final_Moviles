@@ -77,10 +77,6 @@ public class Ver_Nota extends AppCompatActivity {
     }
 
     public void configurarRecyclerView() {
-        verMenu();
-    }
-
-    public void verMenu() {
         // Tu lógica para mostrar el menú
         Utilidad.ReferenciaDeColeccion referenciaDeColeccion = Utilidad.getReferenciaDeColeccion();
         CollectionReference collectionRef = referenciaDeColeccion.collectionReference;
