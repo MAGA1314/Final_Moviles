@@ -13,11 +13,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class filtrar_Nota extends AppCompatActivity {
 
@@ -25,6 +31,8 @@ public class filtrar_Nota extends AppCompatActivity {
     EditText BuscarTexto;
     FirebaseAuth firebaseAuth;
 
+    NotaAdapter notaAdapter;
+    RecyclerView recyclerView;
     ExtendedFloatingActionButton btnVolver, btnAgregar, btnPerfil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +49,11 @@ public class filtrar_Nota extends AppCompatActivity {
         btnAgregar = findViewById(R.id.add_note);
         btnPerfil = findViewById(R.id.perfilbtn);
         BuscarTexto = findViewById(R.id.ETbuscar);
+        recyclerView = findViewById(R.id.recycler_view_filtrar);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        configurarRecyclerView();
 
         BtnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,6 +79,29 @@ public class filtrar_Nota extends AppCompatActivity {
                 startActivity(new Intent(filtrar_Nota.this, MiPerfil.class));
             }
         });
+
+    }
+    public void configurarRecyclerView() {
+        verMenu();
+    }
+
+    public void verMenu() {
+        // Tu lógica para mostrar el menú
+        Utilidad.ReferenciaDeColeccion referenciaDeColeccion = Utilidad.getReferenciaDeColeccion();
+        CollectionReference collectionRef = referenciaDeColeccion.collectionReference;
+        Query query = collectionRef.orderBy("timestamp", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<Nota> options = new FirestoreRecyclerOptions.Builder<Nota>()
+                .setQuery(query, Nota.class).build();
+        notaAdapter = new NotaAdapter(options, this); // Inicializa notaAdapter con los datos reales
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(notaAdapter);
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (notaAdapter!= null) {
+            notaAdapter.startListening();
+        }
     }
     public void ShowMenu(){
         PopupMenu popupMenu = new PopupMenu(filtrar_Nota.this,BtnMenu);
