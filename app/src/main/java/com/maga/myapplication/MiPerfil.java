@@ -88,6 +88,7 @@ public class MiPerfil extends AppCompatActivity {
         PopupMenu popupMenu = new PopupMenu(MiPerfil.this,menubtn);
         popupMenu.getMenu().add("Agregar Nota");
         popupMenu.getMenu().add("Ver Mis Notas");
+        popupMenu.getMenu().add("Buscar Nota");
         popupMenu.getMenu().add("Cerrar Sesion");
         popupMenu.show();
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -101,6 +102,8 @@ public class MiPerfil extends AppCompatActivity {
                     startActivity(new Intent(MiPerfil.this, Agregar_Nota.class));
                 } else if (item.getTitle()=="Ver Mis Notas") {
                     startActivity(new Intent(MiPerfil.this, Ver_Nota.class));
+                }else if (item.getTitle()=="Buscar Nota") {
+                    startActivity(new Intent(MiPerfil.this, filtrar_Nota.class));
                 }
                 return false;
             }

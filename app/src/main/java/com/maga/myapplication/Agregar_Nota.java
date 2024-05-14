@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.nio.charset.StandardCharsets;
@@ -33,8 +37,10 @@ public class Agregar_Nota extends AppCompatActivity {
     TextView tituloPagina;
     String title,descripcion,docId;
 
-    ImageButton btnMisNotas, btnBorrar;
-    Button btnGuardar, btnVolver; // Actualizado el nombre del botón
+    FirebaseAuth firebaseAuth;
+    ExtendedFloatingActionButton btnBuscar, BtnMisNotas,BtnVolver;
+    ImageButton btnMenu, btnBorrar;
+    Button btnGuardar; // Actualizado el nombre del botón
     Boolean editarModo = false;
 
     @Override
@@ -46,10 +52,15 @@ public class Agregar_Nota extends AppCompatActivity {
         Descripcion = findViewById(R.id.descripcion);
         Fecha = findViewById(R.id.fecha);
         btnBorrar = findViewById(R.id.btnBorrar);
-        btnMisNotas = findViewById(R.id.btnVerNotas);
+        btnMenu = findViewById(R.id.btnVerMenu);
         btnGuardar = findViewById(R.id.btnGuardar);
-        btnVolver = findViewById(R.id.btn_Volver);
         tituloPagina =findViewById(R.id.titulo_VerNota);
+
+        BtnMisNotas = findViewById(R.id.btnListarNota);
+        BtnVolver = findViewById(R.id.btnVolver);
+        btnBuscar = findViewById(R.id.btnbuscar);
+
+        firebaseAuth = FirebaseAuth.getInstance();
 
         //Recibir los Datos
         title = getIntent().getStringExtra("titulo");
@@ -88,10 +99,10 @@ public class Agregar_Nota extends AppCompatActivity {
                 validarFecha(s.toString());
             }
         });
-        btnMisNotas.setOnClickListener(new View.OnClickListener() {
+        btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Agregar_Nota.this, Ver_Nota.class));
+                ShowMenu();
             }
         });
 
@@ -99,14 +110,45 @@ public class Agregar_Nota extends AppCompatActivity {
 
         btnBorrar.setOnClickListener((v)-> borrarNotaFirebase());
 
-        btnVolver.setOnClickListener(new View.OnClickListener() {
+        BtnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Agregar_Nota.this, MenuPrincipal.class));
             }
         });
+        BtnMisNotas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Agregar_Nota.this, Ver_Nota.class));
+            }
+        });
+        btnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Agregar_Nota.this, filtrar_Nota.class));
+            }
+        });
     }
 
+    public void ShowMenu(){
+        PopupMenu popupMenu = new PopupMenu(Agregar_Nota.this,btnMenu);
+        popupMenu.getMenu().add("Mi Perfil");
+        popupMenu.getMenu().add("Cerrar Sesion");
+        popupMenu.show();
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getTitle()=="Cerrar Sesion"){
+                    firebaseAuth.getInstance().signOut();
+                    startActivity(new Intent(Agregar_Nota.this, MainActivity.class));
+                    finish();
+                } else if (item.getTitle()=="Mi Perfil") {
+                    startActivity(new Intent(Agregar_Nota.this, MiPerfil.class));
+                }
+                return false;
+            }
+        });
+    }
     private void borrarNotaFirebase() {
         Utilidad.ReferenciaDeColeccion referenciaDeColeccion = Utilidad.getReferenciaDeColeccion();
         DocumentReference documentReference;

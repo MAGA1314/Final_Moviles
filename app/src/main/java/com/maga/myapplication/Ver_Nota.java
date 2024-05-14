@@ -29,7 +29,7 @@ import com.google.firebase.firestore.Query;
 public class Ver_Nota extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ExtendedFloatingActionButton addNota, btnVolver; // Cambia el tipo a ExtendedFloatingActionButton
+    ExtendedFloatingActionButton AddNota, BtnVolver, BtnBuscar; // Cambia el tipo a ExtendedFloatingActionButton
     ImageButton menubtn;
     NotaAdapter notaAdapter;
     FirebaseAuth firebaseAuth;
@@ -45,24 +45,31 @@ public class Ver_Nota extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        addNota = findViewById(R.id.add_note); // Ahora es seguro asignar el botón flotante
+        AddNota = findViewById(R.id.btnAdd);
         recyclerView = findViewById(R.id.recycler_view_notas);
         menubtn = findViewById(R.id.btnMenu);
-        btnVolver = findViewById(R.id.btnVolver);
+        BtnVolver = findViewById(R.id.btnVolver);
+        BtnBuscar = findViewById(R.id.btnBuscar);
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
-        btnVolver.setOnClickListener(new View.OnClickListener() {
+        BtnVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Ver_Nota.this, MenuPrincipal.class));
             }
         });
-        addNota.setOnClickListener(new View.OnClickListener() {
+        AddNota.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Ver_Nota.this, Agregar_Nota.class));
+            }
+        });
+        BtnBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Ver_Nota.this, filtrar_Nota.class));
             }
         });
         menubtn.setOnClickListener((v) -> ShowMenu()); // Llama a ShowMenu() cuando se hace clic en el botón del menú

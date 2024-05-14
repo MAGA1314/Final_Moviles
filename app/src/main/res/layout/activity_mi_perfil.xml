@@ -66,7 +66,7 @@
             android:layout_margin="20dp"
             android:drawableStart="@drawable/person"
             android:fontFamily="@font/platypiregular"
-            android:textSize="18sp" />
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/txtCorreoPerfil"
@@ -76,8 +76,7 @@
             android:layout_marginTop="316dp"
             android:drawableStart="@drawable/mail"
             android:fontFamily="@font/platypiregular"
-            android:textColor="#666666"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txtContrasena"
@@ -87,8 +86,7 @@
             android:layout_marginTop="316dp"
             android:drawableStart="@drawable/lock"
             android:fontFamily="@font/platypiregular"
-            android:textColor="#666666"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/txtrestablecer"
@@ -99,7 +97,7 @@
             android:fontFamily="@font/platypiregular"
             android:text="@string/restablecer"
             android:textColor="#666666"
-            android:textSize="14sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <EditText
@@ -123,7 +121,7 @@
             android:drawableEnd="@drawable/save"
             android:fontFamily="@font/platypiregular"
             android:text="@string/restablecer"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
 
     </LinearLayout>
