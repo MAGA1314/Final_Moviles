@@ -241,7 +241,7 @@ public class Agregar_Nota extends AppCompatActivity {
                     Utilidad.verToast(Agregar_Nota.this,"Nota Agregada o Actualizada.");
                 }else{
                     // Nota sin agregar o actualizar
-                    Utilidad.verToast(Agregar_Nota.this,"Nota No Agregada o Actualizada.");
+                    Utilidad.verToast(Agregar_Nota.this,"Error al Procesar la Nota");
                 }
             }
         });
