@@ -37,6 +37,10 @@ public class MenuPrincipal extends AppCompatActivity {
     ProgressBar progressBarDatos;
     DatabaseReference Usuarios;
 
+    /**
+      * Se llama cuando la actividad está empezando.
+      * @param savedInstanceState Si la actividad se está reiniciando después de haber sido cerrada anteriormente, entonces este Bundle contiene los datos más recientes que suministró en onSaveInstanceState(Bundle).
+      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +51,6 @@ public class MenuPrincipal extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("Agenda");
@@ -63,7 +66,7 @@ public class MenuPrincipal extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
 
-        //--> ImageButtons
+         // ImageButtons
         CrearNota = findViewById(R.id.linearLayoutAgregarNota);
         ListarNota = findViewById(R.id.linearLayoutListarNota);
         BuscarNota = findViewById(R.id.linearLayoutBuscarNota);
@@ -103,14 +106,17 @@ public class MenuPrincipal extends AppCompatActivity {
         btnmenu.setOnClickListener((v)-> ShowMenu());
     }
 
+    /**
+     * Mostrar un menú emergente con la opción de cerrar sesión.
+      */
     public void ShowMenu(){
         PopupMenu popupMenu = new PopupMenu(MenuPrincipal.this,btnmenu);
-        popupMenu.getMenu().add("Cerrar Sesion");
+        popupMenu.getMenu().add("Cerrar Sesión");
         popupMenu.show();
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getTitle()=="Cerrar Sesion"){
+                if (item.getTitle().equals("Cerrar Sesión")){
                     firebaseAuth.getInstance().signOut();
                     startActivity(new Intent(MenuPrincipal.this, MainActivity.class));
                     finish();
@@ -119,40 +125,51 @@ public class MenuPrincipal extends AppCompatActivity {
             }
         });
     }
+
+    /**
+      * Se llama cuando la actividad está a punto de hacerse visible.
+      */
     @Override
     protected void onStart() {
         ComprobarInicioSesion();
         super.onStart();
     }
 
+    /**
+      * Comprobar si el usuario ha iniciado sesión.
+      */
     private void ComprobarInicioSesion(){
-        //El usuario inicio sesion
+         // El usuario inició sesión
         if(user != null){
             CargarDatos();
         }else {
-            // lo dirijimos a MainActivity
+            // Redirigir a MainActivity
             startActivity(new Intent(MenuPrincipal.this,MainActivity.class));
         }
     }
+
+    /**
+      * Cargar los datos del usuario.
+      */
     private void CargarDatos(){
         Usuarios.child(user.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                // Si Existe el Usuario
+                // Si existe el usuario
                 if (snapshot.exists()){
-                    //Ocultamos progress
+                     // Ocultar el progreso
                     progressBarDatos.setVisibility(View.GONE);
-                    // Mostramos Datos
+                    // Mostrar los datos
                     NombrePrincipal.setVisibility(View.VISIBLE);
-                    //CorreoPrincipal.setVisibility(View.VISIBLE);
+                     // CorreoPrincipal.setVisibility(View.VISIBLE);
 
-                    //Obenemos datos
+                     // Obtener datos
                     String nombres = ""+snapshot.child("nombre").getValue();
-                    //String correo = ""+snapshot.child("mail").getValue();
+                     // String correo = ""+snapshot.child("mail").getValue();
 
-                    //setear los datos en los textviews
+                     // Establecer los datos en los textviews
                     NombrePrincipal.setText(nombres);
-                    //CorreoPrincipal.setText(correo);
+                     // CorreoPrincipal.setText(correo);
                 }
             }
             @Override
@@ -161,9 +178,13 @@ public class MenuPrincipal extends AppCompatActivity {
             }
         });
     }
+
+    /**
+      * Cerrar sesión del usuario.
+      */
     private void SalirAplicacion() {
         firebaseAuth.signOut();
         startActivity(new Intent(MenuPrincipal.this, MainActivity.class));
-        Toast.makeText(this,"Cerraste sesion", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,"Cerraste sesión", Toast.LENGTH_SHORT).show();
     }
 }

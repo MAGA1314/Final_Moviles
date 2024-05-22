@@ -30,8 +30,6 @@ public class Splash extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-
-
         // Agrega el retraso para iniciar la siguiente actividad
         new Handler().postDelayed(new Runnable() {
             @Override
